@@ -1,0 +1,12 @@
+{
+  "project_name": "FDE 客户路径巡检",
+  "source_file": "F:\\FDE\\dld\\week02\\day01\\customer_paths.txt",
+  "summary": {
+    "total": 0,
+    "file": 0,
+    "folder": 0,
+    "missing": 0,
+    "error": 0
+  },
+  "results": []
+}
