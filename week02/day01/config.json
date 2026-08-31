@@ -2,5 +2,6 @@
   "project_name": "FDE 客户路径巡检",
   "input_file": "customer_paths.txt",
   "output_file": "report.json",
-  "include_file_size": true
+  "include_file_size": true,
+  "operator": "Dingzhen"
 }

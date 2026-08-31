@@ -122,7 +122,8 @@ def main():
         "project_name": config.get("project_name", "未命名项目"),
         "source_file": str(input_path.resolve()),
         "summary": build_summary(results),
-        "results": results
+        "results": results,
+        "operator":config["operator"]
     }
 
     save_report(output_path, report)

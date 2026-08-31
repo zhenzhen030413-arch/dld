@@ -1,6 +1,4 @@
-{
-  "project_name": "FDE 客户路径巡检",
-  "input_file": "customer_paths.txt",
-  "output_file": "report.json",
-  "include_file_size": true
-}
+../../week01/day01.md
+../../week01/day04/batch_path_checker.py
+../../week01
+../../week01/not_found.csv
