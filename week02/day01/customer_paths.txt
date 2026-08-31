@@ -1,0 +1,4 @@
+../../week01/day01.md
+../../week01/day04/batch_path_checker.py
+../../week01
+../../week01/not_found.csv

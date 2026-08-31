@@ -1,0 +1,42 @@
+{
+  "project_name": "FDE 客户路径巡检",
+  "source_file": "F:\\FDE\\dld\\week02\\day01\\customer_paths.txt",
+  "summary": {
+    "total": 4,
+    "file": 2,
+    "folder": 1,
+    "missing": 1,
+    "error": 0
+  },
+  "results": [
+    {
+      "input_path": "../../week01/day01.md",
+      "absolute_path": "F:\\FDE\\dld\\week01\\day01.md",
+      "exists": true,
+      "type": "file",
+      "suffix": ".md",
+      "size_bytes": 1008
+    },
+    {
+      "input_path": "../../week01/day04/batch_path_checker.py",
+      "absolute_path": "F:\\FDE\\dld\\week01\\day04\\batch_path_checker.py",
+      "exists": true,
+      "type": "file",
+      "suffix": ".py",
+      "size_bytes": 2354
+    },
+    {
+      "input_path": "../../week01",
+      "absolute_path": "F:\\FDE\\dld\\week01",
+      "exists": true,
+      "type": "folder"
+    },
+    {
+      "input_path": "../../week01/not_found.csv",
+      "absolute_path": "F:\\FDE\\dld\\week01\\not_found.csv",
+      "exists": false,
+      "type": "missing"
+    }
+  ],
+  "operator": "Dingzhen"
+}
