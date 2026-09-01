@@ -1,0 +1,15 @@
+{
+  "input": "html作用？",
+  "category": "frontend",
+  "tool_used": "frontend_tool",
+  "result": {
+    "problem": "html作用？",
+    "owner": "Frontend",
+    "checks": [
+      "检查 HTML 结构是否正确",
+      "检查 CSS 是否正确加载",
+      "检查 JavaScript 控制台是否有报错",
+      "检查网络请求是否成功"
+    ]
+  }
+}
