@@ -1,10 +1,6 @@
 import json
 import os
-from tools import get_ticket
-from tools import search_ticket
-from tools import get_user_ticket
-
-from tool_schemas import TOOLS
+from api_client import get_todo
 
 from volcenginesdkarkruntime import Ark
 
@@ -25,46 +21,68 @@ client = Ark( # 创建豆包API客户端
     base_url="https://ark.cn-beijing.volces.com/api/v3",  # 指定火山方舟API地址
     api_key=api_key  # 提供身份认证信息
 )
-expected_parameters = {
-    "get_ticket": {"ticket_id"},
-    "search_ticket": {"keyword"},
-    "get_user_ticket": {"user_name"}
-}
+TOOLS = [
+    {
+        "type": "function",
+
+        "function": {
+            "name": "get_todo",
+
+            "description": "根据任务ID查询Todo任务信息",
+
+            "parameters": {
+                "type": "object",
+
+                "properties": {
+                    "todo_id": {
+                        "type": "integer",
+                        "description": "Todo任务ID"
+                    }
+                },
+
+                "required": ["todo_id"]
+            }
+        }
+    }
+]
 def execute_tool(tool_name, arguments):
     # 只允许执行 TOOL_MAP 中注册的工具
     if tool_name not in TOOL_MAP:
         return {"success": False, "error": "不允许执行这个工具"}
+
+    # 检查模型传来的参数
     if not isinstance(arguments, dict):
         return {"success": False, "error": "工具参数必须是字典"}
-    if set(arguments) != expected_parameters[tool_name]:
-        return {"success": False, "error": "必须且只能提供 ticket_id"}
-    for name, value in arguments.items():
-        if not isinstance(value, str) or not value.strip():
-            return {
-                "success": False,
-                "error": f"{name} 必须是非空字符串",
-            }
 
+    if set(arguments) != {"todo_id"}:
+        return {"success": False, "error": "必须且只能提供 todo_id"}
+
+    todo_id = arguments["todo_id"]
+
+    if type(todo_id) is not int or todo_id <= 0:
+        return {"success": False, "error": "todo_id 必须是正整数"}
+
+    # 找到真实函数并执行，例如 get_todo(todo_id=17)
     return TOOL_MAP[tool_name](**arguments)
 
+
 def run_agent(user_question):
-    # 1. 让LLM生成一个工单查询请求
+    # 准备系统要求和用户问题
     messages = [
         {
             "role": "system",
             "content": (
-                "你是一个工单查询助手。"
-    "用户提供工单编号时，使用 get_ticket。"
-    "用户描述问题或提供问题关键词时，使用 search_ticket。"
-    "用户要查询某个用户的工单时，使用 get_user_ticket。"
-    "缺少所选工具需要的信息时，先询问用户。"
-    "一般知识问题直接回答，无须调用工具。"
-    "依据工具返回的数据回答，不要编造；查询失败时说明原因。"
-            )},
-            {"role": "user", "content": user_question},
+                "你是待办事项查询助手。"
+                "查询具体任务时，使用 get_todo 获取数据，不要编造。"
+                "未提供任务ID时，先询问用户。"
+                "一般知识问题直接回答，无须调用工具。"
+                "工具查询失败时，明确说明失败原因。"
+            ),
+        },
+        {"role": "user", "content": user_question},
     ]
 
-        # 没有工具调用请求，就返回模型回答
+    # 最多请求模型5轮，避免一直循环
     for step in range(5):
         print(f"\n===== 第 {step + 1} 轮 =====")
 
@@ -112,15 +130,12 @@ def run_agent(user_question):
                     tool_result, ensure_ascii=False
                 ),
             })
-        
-                
 
     return "已达到最大执行轮数，停止查询。"
+
 TOOL_MAP = {
-    "get_ticket": get_ticket,
-    "search_ticket": search_ticket,
-    "get_user_ticket": get_user_ticket
- }
+    "get_todo": get_todo
+}
 
 def main():
     # 等待你输入问题，按回车后保存到 user_question
