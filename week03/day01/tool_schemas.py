@@ -40,5 +40,45 @@ TOOLS = [
                 "required": ["ticket_id"]
             }
         }
+    },
+    # 第二个工具。
+    {#根据用户的关键词搜索相关工单,当用户不知道具体的工单编号时，可以使用这个工具来搜索相关工单。
+        "type": "function",
+        "function":{
+            "name": "search_ticket",
+            "description": "根据用户关键词搜索工单",
+            "parameters": {
+                "type": "object",
+                "propertys": {
+                    "keyword":{
+                        "type": "string",
+                        "description":"需要查询的关键词，例如 用户无法登录系统" ,
+                    }
+                },
+                "required": ["keyword"],
+            }
+            
+        }
+
+    },
+    {
+        "type": "function",
+
+        "function": {
+            "name": "get_user_ticket",
+            "description": "根据用户名查询该用户的所有工单",
+            "parameters": {
+                "type": "object",
+
+                "properties": {
+                    "user_name": {
+                        "type": "string",
+                        "description": "需要查询的用户名，例如 张三"
+                    }
+                },
+
+                "required": ["user_name"]
+            }
+        }
     }
 ]
